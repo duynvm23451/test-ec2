@@ -6,11 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/index.css" />
   </head>
-  <body class="body">
-    <h1>Bạn đang ở bucket <%= bucket %></h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" required />
-      <button class="button">Tải file</button>
-    </form>
+  <body>
+    <h1>Tải file thành công <%= filename %></h1>
+    <a href="/" class="button">Trả về trang chủ</a>
   </body>
 </html>

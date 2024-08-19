@@ -1,0 +1,20 @@
+.body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  background: rgb(235, 205, 210);
+}
+
+.button {
+  height: fit-content;
+  width: fit-content;
+  padding: 1rem;
+  border: 2px solid black;
+  background-color: skyblue;
+  border-radius: 8px;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+}

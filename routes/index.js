@@ -43,17 +43,33 @@ router.get("/", async (req, res, next) => {
   };
   try {
     const data = await dynamoDBClient.send(new ScanCommand(params));
+    let items;
     if (data.Items) {
       console.log("Items retrieved successfully:", data.Items);
-      let items = data.Items;
+      items = data.Items;
     } else {
       console.log("No items found.");
-      let items = [];
+      items = [];
     }
     res.render("index", { bucket: "cloud-internship-project3-s3" }, items);
   } catch (err) {
     console.error("Error retrieving items from DynamoDB:", err);
     throw new Error("Could not retrieve items from DynamoDB");
+  }
+});
+
+router.get("/:filename", async (req, res) => {
+  const filename = req.params.filename;
+  const command = new GetObjectCommand({
+    Bucket: "cloud-internship-project3-s3",
+    Key: filename,
+  });
+  try {
+    const response = await client.send(command);
+    const str = await response.Body.transformToString();
+    console.log(str);
+  } catch (err) {
+    console.log(err);
   }
 });
 

@@ -2,7 +2,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   background: rgb(235, 205, 210);
 }
@@ -17,4 +16,10 @@
   color: black;
   font-weight: 600;
   cursor: pointer;
+}
+
+ul {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0;
 }

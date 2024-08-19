@@ -12,5 +12,10 @@
       <input type="file" name="file" required />
       <button class="button">Tải file</button>
     </form>
+    <ul>
+      <% items.forEach(function(item) { %>
+      <li><%= item %></li>
+      <% }); %>
+    </ul>
   </body>
 </html>

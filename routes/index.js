@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient } = require("@aws-sdk/lib-dynamodb");
-const { PutItemCommand } = require("@aws-sdk/client-dynamodb");
+const { PutItemCommand, ScanCommand } = require("@aws-sdk/client-dynamodb");
 const {
   GetObjectCommand,
   S3Client,
@@ -38,7 +38,23 @@ router.get("/", async (req, res, next) => {
   // } catch (err) {
   //   console.log(err);
   // }
-  res.render("index", { bucket: "cloud-internship-project3-s3" });
+  const params = {
+    TableName: "S3MetadataTable",
+  };
+  try {
+    const data = await dynamoDBClient.send(new ScanCommand(params));
+    if (data.Items) {
+      console.log("Items retrieved successfully:", data.Items);
+      let items = data.Items;
+    } else {
+      console.log("No items found.");
+      let items = [];
+    }
+    res.render("index", { bucket: "cloud-internship-project3-s3" }, items);
+  } catch (err) {
+    console.error("Error retrieving items from DynamoDB:", err);
+    throw new Error("Could not retrieve items from DynamoDB");
+  }
 });
 
 router.post("/upload", upload.single("file"), async (req, res) => {

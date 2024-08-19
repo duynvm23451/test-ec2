@@ -47,7 +47,13 @@ router.get("/", async (req, res, next) => {
     let items;
     if (data.Items) {
       console.log("Items retrieved successfully:", data.Items);
-      items = data.Items.map((el) => el.filename.S);
+      items = data.Items.map((el) => {
+        if (el.filename.S) {
+          return el.filename.S;
+        } else {
+          return el.filename;
+        }
+      });
     } else {
       console.log("No items found.");
       items = [];

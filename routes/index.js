@@ -42,8 +42,6 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/upload", upload.single("file"), async (req, res) => {
-  console.log(req.file);
-  console.log(req.file.originalname);
   if (!req.file) {
     return res.status(400).send("Không có file để upload");
   }
@@ -59,8 +57,10 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     TableName: "S3MetadataTable",
     Item: {
       id: { S: req.file.originalname },
-      originalName: { S: req.file.originalname },
-      s3Uri: `s3://cloud-internship-project3-s3/${req.file.originalname}`,
+      filename: { S: req.file.originalname },
+      s3Uri: {
+        S: `s3://cloud-internship-project3-s3/${req.file.originalname}`,
+      },
       uploadTime: { S: new Date().toISOString() },
     },
   };

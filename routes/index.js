@@ -48,7 +48,7 @@ router.get("/", async (req, res, next) => {
     if (data.Items) {
       console.log("Items retrieved successfully:", data.Items);
       items = data.Items.map((el) => {
-        if (el.filename.S) {
+        if (el.filename) {
           return el.filename.S;
         } else {
           return el.filename;
@@ -74,7 +74,7 @@ router.get("/:filename", async (req, res) => {
   try {
     const response = await client.send(command);
     const str = await response.Body.transformToString();
-    console.log(str);
+    res.render("detail", { filename, content: str });
   } catch (err) {
     console.log(err);
   }

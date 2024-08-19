@@ -9,6 +9,7 @@ const {
   PutObjectCommand,
 } = require("@aws-sdk/client-s3");
 const multer = require("multer");
+const e = require("express");
 /* GET home page. */
 
 const client = new S3Client({
@@ -46,8 +47,7 @@ router.get("/", async (req, res, next) => {
     let items;
     if (data.Items) {
       console.log("Items retrieved successfully:", data.Items);
-      items = data.Items;
-      console.log(items[0].filename.S);
+      items = data.Items.map((el) => el.filename.S);
     } else {
       console.log("No items found.");
       items = [];

@@ -69,7 +69,10 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     await ddbDocClient.send(new PutItemCommand(dynamoDBParams));
     res.render("upload", { filename: req.file.originalname });
   } catch (err) {
-    console.error(err);
+    console.error("Error details:", {
+      message: err.message,
+      stack: err.stack,
+    });
     res.status(500).send("Xảy ra lỗi khi upload");
   }
 });

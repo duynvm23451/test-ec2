@@ -51,7 +51,7 @@ router.get("/", async (req, res, next) => {
       console.log("No items found.");
       items = [];
     }
-    res.render("index", { bucket: "cloud-internship-project3-s3" }, items);
+    res.render("index", { bucket: "cloud-internship-project3-s3", items });
   } catch (err) {
     console.error("Error retrieving items from DynamoDB:", err);
     throw new Error("Could not retrieve items from DynamoDB");

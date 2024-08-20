@@ -27,18 +27,18 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 router.get("/", async (req, res, next) => {
-  // const filename = req.query.filename;
-  // const command = new GetObjectCommand({
-  //   Bucket: "cloud-internship-project3-s3",
-  //   Key: filename,
-  // });
-  // try {
-  //   const response = await client.send(command);
-  //   const str = await response.Body.transformToString();
-  //   console.log(str);
-  // } catch (err) {
-  //   console.log(err);
-  // }
+  const filename = req.query.filename;
+  const command = new GetObjectCommand({
+    Bucket: "cloud-internship-project3-s3",
+    Key: filename,
+  });
+  try {
+    const response = await client.send(command);
+    const str = await response.Body.transformToString();
+    console.log(str);
+  } catch (err) {
+    console.log(err);
+  }
   const params = {
     TableName: "S3MetadataTable",
   };
@@ -58,7 +58,7 @@ router.get("/", async (req, res, next) => {
       console.log("No items found.");
       items = [];
     }
-    res.render("index", { bucket: "cloud-internship-project3-s3", items });
+    res.render("index", { bucket: "cloud-internship-project3-s3", items: [] });
   } catch (err) {
     console.error("Error retrieving items from DynamoDB:", err);
     throw new Error("Could not retrieve items from DynamoDB");
@@ -85,10 +85,9 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     return res.status(400).send("Không có file để upload");
   }
 
-  let r = (Math.random() + 1).toString(36).substring(7);
   const params = {
     Bucket: "cloud-internship-project3-s3",
-    Key: req.file.originalname + r,
+    Key: req.file.originalname,
     Body: req.file.buffer,
     ContentType: req.file.mimetype,
   };

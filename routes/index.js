@@ -85,9 +85,10 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     return res.status(400).send("Không có file để upload");
   }
 
+  let r = (Math.random() + 1).toString(36).substring(7);
   const params = {
     Bucket: "cloud-internship-project3-s3",
-    Key: req.file.originalname,
+    Key: req.file.originalname + r,
     Body: req.file.buffer,
     ContentType: req.file.mimetype,
   };

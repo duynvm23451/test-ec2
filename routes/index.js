@@ -39,25 +39,25 @@ router.get("/", async (req, res, next) => {
   // } catch (err) {
   //   console.log(err);
   // }
-  const params = {
-    TableName: "S3MetadataTable",
-  };
+  // const params = {
+  //   TableName: "S3MetadataTable",
+  // };
   try {
-    const data = await dynamoDBClient.send(new ScanCommand(params));
-    let items;
-    if (data.Items) {
-      console.log("Items retrieved successfully:", data.Items);
-      items = data.Items.map((el) => {
-        if (el.filename) {
-          return el.filename.S;
-        } else {
-          return el.filename;
-        }
-      });
-    } else {
-      console.log("No items found.");
-      items = [];
-    }
+    //   const data = await dynamoDBClient.send(new ScanCommand(params));
+    //   let items;
+    //   if (data.Items) {
+    //     console.log("Items retrieved successfully:", data.Items);
+    //     items = data.Items.map((el) => {
+    //       if (el.filename) {
+    //         return el.filename.S;
+    //       } else {
+    //         return el.filename;
+    //       }
+    //     });
+    //   } else {
+    //     console.log("No items found.");
+    //     items = [];
+    //   }
     res.render("index", { bucket: "cloud-internship-project3-s3", items });
   } catch (err) {
     console.error("Error retrieving items from DynamoDB:", err);

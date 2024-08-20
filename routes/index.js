@@ -95,7 +95,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   const dynamoDBParams = {
     TableName: "S3MetadataTable",
     Item: {
-      id: { S: req.file.originalname },
+      key: { S: req.file.originalname },
       filename: { S: req.file.originalname },
       s3Uri: {
         S: `s3://cloud-internship-project3-s3/${req.file.originalname}`,

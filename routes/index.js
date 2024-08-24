@@ -46,7 +46,6 @@ router.get("/", async (req, res, next) => {
     const data = await dynamoDBClient.send(new ScanCommand(params));
     let items;
     if (data.Items) {
-      console.log("Items retrieved successfully:", data.Items);
       items = data.Items.map((el) => {
         if (el.filename) {
           return el.filename.S;
